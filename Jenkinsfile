@@ -8,7 +8,7 @@ pipeline{
     }
     
     stages{        
-        stage('Compile the code'){
+         stage('Compile the code'){           
             steps{
                withMaven(maven: 'MAVEN_3.6'){
                    bat 'mvn clean compile'
@@ -16,21 +16,22 @@ pipeline{
             }
         }
        
-        stage('Test the code'){
-            steps{
-                withMaven(maven: 'MAVEN_3.6'){
-                   bat 'mvn test'
-                }
-            }
-        }
-         stage('Build the code'){
-            steps{
-                withMaven(maven: 'MAVEN_3.6'){
-                   bat 'mvn install'
-                }
-            }
-        }        
-        
+        parallel{
+	        stage('Test the code'){	          
+	            steps{
+	                withMaven(maven: 'MAVEN_3.6'){
+	                   bat 'mvn test'
+	                }
+	            }
+	        }
+	         stage('Build the code'){
+	            steps{
+	                withMaven(maven: 'MAVEN_3.6'){
+	                   bat 'mvn install'
+	                }
+	            }
+	        }        
+         }
     }
     
 }
