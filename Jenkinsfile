@@ -8,7 +8,8 @@ pipeline{
     }
     
     stages{             
-         stage('Compile the code'){           
+         stage('Compile the code'){
+		 echo "version of the pipeline: ${params.VERSION}"
             steps{
                withMaven(maven: 'MAVEN_3.6'){
                    bat 'mvn clean compile'
